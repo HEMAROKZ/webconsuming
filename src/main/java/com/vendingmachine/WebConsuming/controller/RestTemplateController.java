@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.PreparedStatement;
+
 
 @RestController
 public class RestTemplateController {
@@ -43,38 +45,43 @@ public class RestTemplateController {
         return customerWebConsumingService.getAllInventory();
     }
 
+//    @GetMapping("/getProduct/{id}")
+//    @Operation(summary = "Consuming CUSTOMER PROCESS--Get Inventry item by id")
+//    public InventoryResponse getProductById(@PathVariable int id){
+//        return customerWebConsumingService.getProductById(id);
+//    }
     @GetMapping("/getProduct/{id}")
     @Operation(summary = "Consuming CUSTOMER PROCESS--Get Inventry item by id")
     public Inventory getProductById(@PathVariable int id){
         return customerWebConsumingService.getProductById(id);
+
     }
 
 
 
-    @PutMapping("/product")
+    @PostMapping("/product")
     @Operation(summary = "CUSTOMER PROCESS--purchase Inventry item")
-    public String   ProductPurchase(@RequestBody CustomerInputDTO customerInputDTO) {
-        return customerWebConsumingService.purchaseProduct(customerInputDTO);
+    public ResponseEntity<String> ProductPurchase(@RequestBody PurchaseRequest purchaseRequest) {
+        return customerWebConsumingService.callAddMultipledDenominationForProductRest(purchaseRequest);
     }
 
     @PostMapping("/addProduct")
     @Operation(summary = "Consuming ADMIN PROCESS--Add  Inventory item ")
-    public String  addProduct(@RequestBody Inventory inventory){
-         adminWebConsumingService.addProduct(inventory);
-        return "product added sucessfully";
+    public ResponseEntity< String>  addProduct(@RequestBody Inventory inventory){
+        return adminWebConsumingService.addProduct(inventory);
     }
 
     @PutMapping("/updateProduct")
     @Operation(summary = "Consuming ADMIN PROCESS--Update  Inventory item ")
-    public String updateProductById(@RequestBody Inventory e){
-        adminWebConsumingService.updateProductById(e);
-        return "updated !!";
+    public ResponseEntity<String> updateProductById(@RequestBody Inventory e){
+       return adminWebConsumingService.updateProductById(e);
+
     }
 
     @DeleteMapping("/products/{id}")
     @Operation(summary = "Consuming ADMIN PROCESS--DELETE  Inventory item ")
-    public String deleteProductById(@PathVariable int id) {
-        return adminWebConsumingService.deleteProductById(id)+" Product deleted from the database" ;
+    public  ResponseEntity<String> deleteProductById(@PathVariable int id) {
+        return adminWebConsumingService.deleteProductById(id) ;
     }
 
 }

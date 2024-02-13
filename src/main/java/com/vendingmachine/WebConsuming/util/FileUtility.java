@@ -14,7 +14,7 @@ public class FileUtility {
     public static final String GET_TOKEN="/authenticate";
     public static final String GET_ALL_ITEMS="/getAllInventoryRest";
     public static final String GET_PRODUCT_BY_ID="/productRest/{id}";
-    public static final String PURCHASE_PRODUCT_BY_ID="/product";
+    public static final String PURCHASE_PRODUCT_BY_ID="/multiplePurchaseOfProductFinalRest";
 
     public static HttpHeaders getJwtHeaders() {
         String jwtToken = getNewToken();  // Retrieve the token from a secure configuration property
