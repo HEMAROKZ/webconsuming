@@ -54,4 +54,13 @@ public class Inventory {
         this.productInventoryCount = productInventoryCount;
     }
 
+    @Override
+    public String toString() {
+        return "Inventory{" +
+                "productId=" + productId +
+                ", name='" + name + '\'' +
+                ", productPrice=" + productPrice +
+                ", productInventoryCount=" + productInventoryCount +
+                '}';
+    }
 }

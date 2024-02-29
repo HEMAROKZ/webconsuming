@@ -4,16 +4,19 @@ package com.vendingmachine.WebConsuming.model;
 import com.vendingmachine.WebConsuming.model.purchaseproduct.*;
 
 public class PurchaseRequest {
-    private MultiplePurchaseDTO multiplePurchaseDTO;
     private DenominationConfig denominationConfig;
     private int billingCounter;
 
-    public MultiplePurchaseDTO getMultiplePurchaseDTO() {
-        return multiplePurchaseDTO;
+    private PurchaseDTO purchaseDTO;
+
+
+
+    public PurchaseDTO getPurchaseDTO() {
+        return purchaseDTO;
     }
 
-    public void setMultiplePurchaseDTO(MultiplePurchaseDTO multiplePurchaseDTO) {
-        this.multiplePurchaseDTO = multiplePurchaseDTO;
+    public void setPurchaseDTO(PurchaseDTO purchaseDTO) {
+        this.purchaseDTO = purchaseDTO;
     }
 
     public DenominationConfig getDenominationConfig() {
@@ -35,7 +38,7 @@ public class PurchaseRequest {
     @Override
     public String toString() {
         return "PurchaseRequest{" +
-                "multiplePurchaseDTO=" + multiplePurchaseDTO +
+                "multiplePurchaseDTO=" + purchaseDTO +
                 ", denominationConfig=" + denominationConfig +
                 ", billingCounter=" + billingCounter +
                 '}';

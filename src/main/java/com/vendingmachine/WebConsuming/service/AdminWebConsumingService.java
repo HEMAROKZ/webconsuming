@@ -1,6 +1,5 @@
 package com.vendingmachine.WebConsuming.service;
 
-import com.vendingmachine.WebConsuming.customeexception.CustomIOException;
 import com.vendingmachine.WebConsuming.model.Inventory;
 import com.vendingmachine.WebConsuming.model.JwtRequest;
 import com.vendingmachine.WebConsuming.model.JwtResponse;
@@ -8,6 +7,7 @@ import com.vendingmachine.WebConsuming.util.FileUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -19,9 +19,11 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class AdminWebConsumingService {
 
+  public   RestTemplate restTemplate;
     @Autowired
-    RestTemplate restTemplate;
-
+    public AdminWebConsumingService( RestTemplate restTemplate){
+     this.restTemplate=restTemplate;
+    }
     private static final Logger log = LoggerFactory.getLogger(AdminWebConsumingService.class);
 
     public ResponseEntity<JwtResponse> getTokenService(JwtRequest auth) {
@@ -53,7 +55,6 @@ public class AdminWebConsumingService {
             if (response.getStatusCode().is2xxSuccessful()) {
                 return ResponseEntity.ok(response.getBody());
             } else {
-                // Handle non-successful response (e.g., log the error, throw an exception)
                 return ResponseEntity.status(response.getStatusCode()).body("Request failed");
             }
         } catch (HttpClientErrorException e) {
@@ -64,7 +65,7 @@ public class AdminWebConsumingService {
             return ResponseEntity.status(e.getRawStatusCode()).body(e.getResponseBodyAsString());
         }
         catch (RestClientException e) {
-            // Handle RestClientException (e.g., connection issues, timeouts)
+            // Handle  connection issues, timeouts
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error");
         }
     }

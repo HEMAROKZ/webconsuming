@@ -13,9 +13,8 @@ public class Config {
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder){
         UriTemplateHandler uriTemplateHandler=new RootUriTemplateHandler("http://localhost:8080");
-            return builder
-                    .uriTemplateHandler(uriTemplateHandler)
-                    .build();
-
+        return builder
+                .uriTemplateHandler(uriTemplateHandler)
+                .build();
     }
 }

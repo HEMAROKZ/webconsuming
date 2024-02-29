@@ -10,26 +10,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.PreparedStatement;
+import java.util.List;
+import java.util.Objects;
 
 
 @RestController
 public class RestTemplateController {
 
-        @Autowired
-        private AdminWebConsumingService adminWebConsumingService;
+        private final AdminWebConsumingService adminWebConsumingService;
 
-        @Autowired
-        private CustomerWebConsumingService customerWebConsumingService;
+        private final CustomerWebConsumingService customerWebConsumingService;
 
         private static final Logger log = LoggerFactory.getLogger(RestTemplateController.class);
 
-        @PostMapping("/get-token")
+    public RestTemplateController(AdminWebConsumingService adminWebConsumingService, CustomerWebConsumingService customerWebConsumingService) {
+        this.adminWebConsumingService = adminWebConsumingService;
+        this.customerWebConsumingService = customerWebConsumingService;
+    }
+
+    @PostMapping("/get-token")
     public ResponseEntity<JwtResponse> getToken(@RequestBody JwtRequest authenticationRequest) {
         try {
             ResponseEntity<JwtResponse> response = adminWebConsumingService.getTokenService(authenticationRequest);
 
-            GeneratedToken.setNewToken(response.getBody().getToken());
+            GeneratedToken.setNewToken(Objects.requireNonNull(response.getBody()).getToken());
                         return ResponseEntity.ok()
                                 .body( response.getBody());
 
@@ -41,15 +45,11 @@ public class RestTemplateController {
 
     @GetMapping("/getAllProduct")
     @Operation(summary = "Consuming CUSTOMER PROCESS--Get LIST OF ALL Inventry item")
-    public ResponseEntity<String> getAllProduct(){
+    public ResponseEntity<List<Inventory>> getAllProduct(){
         return customerWebConsumingService.getAllInventory();
     }
 
-//    @GetMapping("/getProduct/{id}")
-//    @Operation(summary = "Consuming CUSTOMER PROCESS--Get Inventry item by id")
-//    public InventoryResponse getProductById(@PathVariable int id){
-//        return customerWebConsumingService.getProductById(id);
-//    }
+
     @GetMapping("/getProduct/{id}")
     @Operation(summary = "Consuming CUSTOMER PROCESS--Get Inventry item by id")
     public Inventory getProductById(@PathVariable int id){
