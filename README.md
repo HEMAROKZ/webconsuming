@@ -11,7 +11,7 @@ WEBCONSUMING SPRING BOOT APPLICATION
   ENDPOINTS PRESENT
   
   part of ADMIN process:
-  * http://localhost:8082/get-token -TO GENERATE token wsing crediantials .
+  * http://localhost:8082/get-token -TO GENERATE token using crediantials .
   * http://localhost:8082/products/{id}  -to delete an particular product.
   * http://localhost:8082/addProduct -to add an product in inventory.
   * http://localhost:8082/updateProduct -to update an product in inventory.
